@@ -1,1 +1,2 @@
-# 1D-Cutting-Stock-Problem-Simulated-Annealing
+Solution of one-dimensional cutting stock problem by simulated annealing. 
+Written in Java.

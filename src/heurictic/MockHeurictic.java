@@ -1,26 +1,19 @@
 package heurictic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.IntStream;
-import problemData.DataInterface;
+import problemData.MockData;
 
-public class RandomHeuristic implements Heuristic {
+public class MockHeurictic implements Heuristic {
 
-    private DataInterface data;
-
-    public RandomHeuristic(DataInterface data) {
-        this.data = data;
-    }
+    private MockData data = new MockData();
 
     @Override
     public List<Integer> createSolution() {
         List<Integer> solution = new ArrayList<>();
         addAllOrderedStocksToList(solution);
-        randomlyMixList(solution);
         return solution;
     }
 
@@ -35,10 +28,4 @@ public class RandomHeuristic implements Heuristic {
             IntStream.range(0, amount).forEach(x -> list.add(length));
         }
     }
-    
-    private void randomlyMixList(List<Integer> list) {
-        long seed = System.nanoTime();
-        Collections.shuffle(list, new Random(seed));
-    }
-
 }

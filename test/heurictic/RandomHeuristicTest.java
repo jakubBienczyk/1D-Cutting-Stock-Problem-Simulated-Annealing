@@ -1,36 +1,30 @@
 package heurictic;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import problemData.Data;
+import problemData.MockData;
 
 public class RandomHeuristicTest {
-
+    private MockData data = new MockData();
 
     @Test
     public void testCreateSolution() {
-        RandomHeuristic instance = new RandomHeuristic(createMockData());
+        RandomHeuristic instance = new RandomHeuristic(data);
         List<Integer> soultion = instance.createSolution();
-        assertTrue(soultion.size() == 13);
-        assertTrue(soultion.stream().filter(x -> x == 5).toArray().length == 1);
-        assertTrue(soultion.stream().filter(x -> x == 10).toArray().length == 5);
-        assertTrue(soultion.stream().filter(x -> x == 15).toArray().length == 7);
-        assertTrue(soultion.stream().filter(x -> x != 5 && x != 10 && x != 15).toArray().length == 0);
-    }
-
-    private Data createMockData() {
-        List orderedStacksLength = new ArrayList();
-        List numberOfOrderedStacks = new ArrayList();
-        orderedStacksLength.add(5);
-        numberOfOrderedStacks.add(1);
-        orderedStacksLength.add(10);
-        numberOfOrderedStacks.add(5);
-        orderedStacksLength.add(15);
-        numberOfOrderedStacks.add(7);
-        Data mock = new Data(10, orderedStacksLength, numberOfOrderedStacks);
-        return mock;
+        
+        List<Integer> numberOfOrderedStacks = data.getNumberOfOrderedStacks();
+        assertTrue(soultion.size() == numberOfOrderedStacks.stream().reduce(0, (x,y) -> x+y));
+        
+        Iterator<Integer> amountIterator = data.getNumberOfOrderedStacks().iterator();
+        Iterator<Integer> lengthIterator = data.getOrderedStackLengths().iterator(); 
+        
+        while (amountIterator.hasNext()) {
+            int amount = amountIterator.next();
+            int length = lengthIterator.next();
+            assertTrue(soultion.stream().filter(x -> x == length).toArray().length == amount);
+        }
     }
 
 }
